@@ -1,0 +1,36 @@
+extends layout
+
+block content
+  //- https://developers.google.com/maps/documentation/javascript/adding-a-google-map
+  .row
+    .col-md-3#left
+      ul.list-group
+        each location in locations.lists
+          li.list-group-item(data-lat=location.geometry.lat, data-lng=location.geometry.lng, data-address=location.address)=location.address
+    .col-md-9#right
+      #map
+  script(async,defer,src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtGR4aPW5I_UreyjuvUaJdLL0N_LqSPdw&callback=initMap")
+  script.
+    function initMap() {
+      var el = $('.list-group-item')[0];
+
+      var uluru = {lat: $(el).data('lat'), lng: $(el).data('lng') }
+      
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 15,
+        center: uluru
+      });
+      var marker = new google.maps.Marker({
+        position: uluru,
+        map: map
+      })
+
+      $('.list-group-item').each(function (idx) { 
+        console.log({lat: $(this).data('lat'), lng: $(this).data('lng') })
+        new google.maps.Marker({
+          position: {lat: $(this).data('lat'), lng: $(this).data('lng') },
+          map: map
+        })
+      })
+      
+    }
