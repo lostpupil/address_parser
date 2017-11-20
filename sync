@@ -1,0 +1,1 @@
+rsync -vzr --delete * root@www.evilbanana.cn:/var/www/maps.evilbanana.cn
